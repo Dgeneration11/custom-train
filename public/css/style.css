@@ -1,7 +1,7 @@
 :root {
     --bg-color: #121212;
     /* User requested #121212 */
-    --card-bg: #121212;
+    --card-bg: #1E1E1E;
 
     /* User requested Blue for Work, Green for Rest */
     --primary-neon: #0011ff;
@@ -16,7 +16,7 @@
 
 /* Light Theme Variables */
 body.light-theme {
-    --bg-color: #fcfcfc;
+    --bg-color: #f0f0f0;
     --card-bg: #ffffff;
     --text-color: #121212;
     /* User requested #121212 */
