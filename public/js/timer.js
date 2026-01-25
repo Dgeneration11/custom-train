@@ -158,13 +158,24 @@ class WorkoutTimer {
         // For now, let's just log "X Sets Completed"
 
         if (window.AppStorage) {
+            this.finishBtn.disabled = true; // Prevent double click
+            this.finishBtn.textContent = 'Saving...';
+
             window.AppStorage.saveWorkout({
                 date: date,
                 sets: this.setsCompleted,
                 duration: `${this.setsCompleted} sets` // Simple duration for now
+            }).then(() => {
+                alert(`Workout Saved! ${this.setsCompleted} sets completed.`);
+                this.finishBtn.disabled = false;
+                this.finishBtn.textContent = 'FINISH & SAVE WORKOUT';
+                this.resetTimer();
+            }).catch(err => {
+                console.error("Save failed", err);
+                alert("Failed to save workout. Check console.");
+                this.finishBtn.disabled = false;
+                this.finishBtn.textContent = 'FINISH & SAVE WORKOUT';
             });
-            alert(`Workout Saved! ${this.setsCompleted} sets completed.`);
-            this.resetTimer();
         } else {
             console.error("Storage module not found");
         }

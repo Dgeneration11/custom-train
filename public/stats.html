@@ -74,53 +74,56 @@
     <script src="js/theme.js"></script>
     <script src="js/calendar.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const stats = window.AppStorage.getStats();
-            document.getElementById('total-sessions').textContent = stats.totalSessions;
-            document.getElementById('total-sets').textContent = stats.totalSets;
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const stats = await window.AppStorage.getStats();
+                document.getElementById('total-sessions').textContent = stats.totalSessions;
+                document.getElementById('total-sets').textContent = stats.totalSets;
 
-            const history = window.AppStorage.getHistory();
-            const detailsSection = document.getElementById('day-details');
-            const dateLabel = document.getElementById('selected-date-label');
-            const listEl = document.getElementById('day-sessions-list');
+                const history = await window.AppStorage.getHistory();
+                const detailsSection = document.getElementById('day-details');
+                const dateLabel = document.getElementById('selected-date-label');
+                const listEl = document.getElementById('day-sessions-list');
 
-            // Init Calendar with Click Callback
-            new WorkoutCalendar('calendar-mount', history, (date) => {
-                // Handle Date Selection
-                const dateStr = date.toLocaleDateString(undefined, {
-                    weekday: 'long', month: 'long', day: 'numeric'
-                });
-
-                dateLabel.textContent = dateStr;
-                // detailsSection.style.display = 'block'; // No longer needed as it's always visible in grid
-                listEl.innerHTML = '';
-
-                // Filter history for this day
-                const daySessions = history.filter(item => {
-                    const d = new Date(item.date);
-                    return d.getDate() === date.getDate() &&
-                        d.getMonth() === date.getMonth() &&
-                        d.getFullYear() === date.getFullYear();
-                });
-
-                if (daySessions.length > 0) {
-                    daySessions.forEach(item => {
-                        const timeStr = new Date(item.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
-                        const div = document.createElement('div');
-                        div.className = 'history-item';
-                        div.innerHTML = `
-                            <div class="history-date">${timeStr}</div>
-                            <div class="history-details">${item.duration}</div>
-                        `;
-                        listEl.appendChild(div);
+                // Init Calendar with Click Callback
+                new WorkoutCalendar('calendar-mount', history, (date) => {
+                    // Handle Date Selection
+                    const dateStr = date.toLocaleDateString(undefined, {
+                        weekday: 'long', month: 'long', day: 'numeric'
                     });
-                } else {
-                    listEl.innerHTML = '<div class="empty-state" style="padding: 1rem;">No workouts recorded.</div>';
-                }
 
-                // Scroll to details
-                detailsSection.scrollIntoView({ behavior: 'smooth' });
-            });
+                    dateLabel.textContent = dateStr;
+                    listEl.innerHTML = '';
+
+                    // Filter history for this day
+                    const daySessions = history.filter(item => {
+                        const d = new Date(item.date);
+                        return d.getDate() === date.getDate() &&
+                            d.getMonth() === date.getMonth() &&
+                            d.getFullYear() === date.getFullYear();
+                    });
+
+                    if (daySessions.length > 0) {
+                        daySessions.forEach(item => {
+                            const timeStr = new Date(item.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+                            const div = document.createElement('div');
+                            div.className = 'history-item';
+                            div.innerHTML = `
+                                <div class="history-date">${timeStr}</div>
+                                <div class="history-details">${item.duration}</div>
+                            `;
+                            listEl.appendChild(div);
+                        });
+                    } else {
+                        listEl.innerHTML = '<div class="empty-state" style="padding: 1rem;">No workouts recorded.</div>';
+                    }
+
+                    // Scroll to details
+                    detailsSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            } catch (err) {
+                console.error("Error loading stats:", err);
+            }
         });
     </script>
 </body>

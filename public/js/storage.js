@@ -1,23 +1,38 @@
-const STORAGE_KEY = 'neon_pulse_history';
-
 const Storage = {
     // Save a completed workout
-    saveWorkout: (data) => {
-        // data structure: { date: ISOString, sets: number, duration: string (e.g. "20m") }
-        const history = Storage.getHistory();
-        history.unshift(data); // Add new to top
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    saveWorkout: async (data) => {
+        try {
+            const response = await fetch('/api/workout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            return await response.json();
+        } catch (err) {
+            console.error("Failed to save workout:", err);
+            // Fallback? or just log
+        }
     },
 
     // Get all workouts
-    getHistory: () => {
-        const data = localStorage.getItem(STORAGE_KEY);
-        return data ? JSON.parse(data) : [];
+    getHistory: async () => {
+        try {
+            const response = await fetch('/api/history');
+            if (response.ok) {
+                return await response.json();
+            }
+            return [];
+        } catch (err) {
+            console.error("Failed to fetch history:", err);
+            return [];
+        }
     },
 
     // Get aggregated stats
-    getStats: () => {
-        const history = Storage.getHistory();
+    getStats: async () => {
+        const history = await Storage.getHistory();
         const totalSessions = history.length;
         const totalSets = history.reduce((acc, curr) => acc + (curr.sets || 0), 0);
 
@@ -25,11 +40,6 @@ const Storage = {
             totalSessions,
             totalSets
         };
-    },
-
-    // Clear history (optional dev utility)
-    clear: () => {
-        localStorage.removeItem(STORAGE_KEY);
     }
 };
 
