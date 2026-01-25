@@ -66,8 +66,11 @@ class WorkoutTimer {
             this.restSecInput.addEventListener(evt, () => this.updateSettings());
         });
 
-        this.updateSettings();
-        this.updateDisplay(0); // Initial display
+        // this.updateSettings(); // Removed redundant call
+        // this.updateDisplay(0); // Removed redundant call
+
+        // Call resetTimer to ensure correct initial state (Green READY text)
+        this.resetTimer();
     }
 
     // Theme toggling is handled globally by theme.js
@@ -140,7 +143,11 @@ class WorkoutTimer {
 
         // Reset Visuals
         this.body.classList.remove('state-rest');
-        this.body.classList.add('state-work');
+        this.statusLabel.classList.remove('status-ready'); // Clean up just in case
+
+        // Actually, for READY state, we might want a specific class on statusLabel or body
+        this.statusLabel.classList.add('status-ready');
+        this.body.classList.add('state-work'); // Default bg
         this.statusLabel.textContent = 'READY';
         this.startBtn.textContent = 'START';
 
@@ -242,6 +249,7 @@ class WorkoutTimer {
         // Dynamic Status Label updates if running
         if (this.isRunning && this.statusLabel.textContent === 'READY') {
             this.statusLabel.textContent = 'WORK';
+            this.statusLabel.classList.remove('status-ready');
         }
 
         // Progress Ring Smooth

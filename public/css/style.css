@@ -225,8 +225,37 @@ body.light-theme .quote-section:hover {
 
 .timer-circle {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* 3D Cylinder/Disc Style */
+    background: var(--card-bg);
+    border-radius: 50%;
+    /* Circle */
+    transform: rotateX(20deg);
+    /* Slight tilt to see it's a disc? Or just flat. */
+    /* Let's try flat with deep shadow first, simpler and cleaner */
+    transform: none;
+
+    /* Use box-shadow to create the "sides" of the cylinder */
+    /* -x +y is bottom-left shadow */
+    box-shadow:
+        -5px 5px 0 var(--card-side-left),
+        -10px 10px 0 var(--card-side-bottom),
+        -20px 20px 30px rgba(0, 0, 0, 0.5);
+    /* Drop shadow */
+
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+/* Remove square pseudo-elements */
+.timer-circle::before,
+.timer-circle::after {
+    display: none;
 }
 
 .progress-ring__circle-bg {
@@ -292,65 +321,190 @@ body.light-theme .progress-ring__circle-bg {
 
 .btn {
     background: transparent;
-    border: 1px solid var(--text-color);
+    /* border: 1px solid var(--text-color); REMOVED */
     color: var(--text-color);
     padding: 1rem 2.5rem;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    border-radius: 50px;
     transition: all 0.2s ease;
     font-family: var(--font-main);
     letter-spacing: 0.05em;
     text-transform: uppercase;
+
+    /* 3D Block Button */
+    position: relative;
+    border: none;
+    border-radius: 4px;
+    transform: perspective(1000px) rotateX(0) rotateY(0);
+    margin-left: 10px;
+    margin-bottom: 10px;
+    /* Space for depth */
+}
+
+/* 3D Sides for Buttons */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -10px;
+    height: 100%;
+    width: 10px;
+    background: #333;
+    /* Default dark side */
+    transform: skewY(-45deg);
+    transition: 0.2s;
+    z-index: -1;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: -5px;
+    height: 10px;
+    width: 100%;
+    background: #1a1a1a;
+    /* Default darker bottom */
+    transform: skewX(-45deg);
+    transition: 0.2s;
+    z-index: -1;
+}
+
+/* Status State Colors */
+.status-ready {
+    color: var(--rest-neon) !important;
+    /* Force Green for Ready */
 }
 
 .btn-primary {
-    background: var(--text-color);
-    color: var(--bg-color);
-    border: 1px solid var(--text-color);
+    background: var(--card-bg);
+    /* Match Settings Panel */
+    color: var(--text-color);
+    /* White/Black text as requested */
+}
+
+/* Specific side colors using theme vars */
+.btn-primary::before {
+    background: var(--card-side-left);
+}
+
+.btn-primary::after {
+    background: var(--card-side-bottom);
+}
+
+.btn-primary:active {
+    transform: translate(-5px, 5px);
+    box-shadow: none;
 }
 
 .btn-primary:hover {
-    opacity: 0.8;
+    background: var(--card-bg);
+    /* Keep base or slightly tint? */
+    /* Often hover needs slight brightness change, but 3D lift does the work. */
+    /* Let's keep it consistent or add slight brightness filter */
+    filter: brightness(1.2);
+    transform: translate(2px, -2px);
 }
 
+
 .btn-secondary {
-    border-color: var(--text-muted);
-    color: var(--text-muted);
+    background: var(--card-bg);
+    /* Match Settings Panel */
+    color: var(--text-color);
+    /* White/Black text as requested */
+}
+
+/* Re-use same side colors to be consistent */
+.btn-secondary::before {
+    background: var(--card-side-left);
+}
+
+.btn-secondary::after {
+    background: var(--card-side-bottom);
 }
 
 .btn-secondary:hover {
-    border-color: var(--text-color);
+    background: var(--card-bg);
+    filter: brightness(1.2);
     color: var(--text-color);
+    transform: translate(2px, -2px);
 }
 
 .btn-finish {
-    border: 1px solid var(--rest-neon);
+    background: var(--card-bg);
     color: var(--rest-neon);
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+    /* border: 1px solid var(--rest-neon); Removed for block consistency */
+}
+
+.btn-finish::before {
+    background: var(--card-side-left);
+}
+
+.btn-finish::after {
+    background: var(--card-side-bottom);
 }
 
 .btn-finish:hover {
-    background: var(--rest-neon);
-    color: #000;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    background: var(--card-bg);
+    filter: brightness(1.2);
+    box-shadow: none;
+    /* Override old glow */
+    transform: translate(2px, -2px);
 }
 
-/* Settings Panel */
+/* Settings Panel - 3D Block */
 .settings-panel {
     padding: 1.5rem;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
-    transition: border-color 0.3s ease;
+
+    /* 3D Visuals */
+    background: var(--card-bg);
+    /* Block Color */
+    position: relative;
+    border: none;
+    /* Remove line border */
+    border-radius: 4px;
+    /* Blocky */
+    transform: perspective(1000px) rotateX(0) rotateY(0);
+    margin-left: 10px;
+    /* Make space for left extrusion */
+    margin-bottom: 10px;
+    /* Make space for bottom extrusion */
 }
 
+/* 3D Sides for Settings Panel */
+.settings-panel::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -10px;
+    height: 100%;
+    width: 10px;
+    background: var(--card-side-left);
+    transform: skewY(-45deg);
+    z-index: -1;
+}
+
+.settings-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: -5px;
+    height: 10px;
+    width: 100%;
+    background: var(--card-side-bottom);
+    transform: skewX(-45deg);
+    z-index: -1;
+}
+
+
 body.light-theme .settings-panel {
-    border-color: #e0e0e0;
+    border-color: transparent;
+    background: #ffffff;
 }
 
 .setting-group {
@@ -388,6 +542,7 @@ body.light-theme .settings-panel {
     font-family: var(--font-main);
     transition: border-color 0.3s ease, color 0.3s ease;
 }
+
 
 body.light-theme .input-wrapper input {
     border-color: #e0e0e0;
