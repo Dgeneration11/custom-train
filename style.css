@@ -1,0 +1,783 @@
+:root {
+    --bg-color: #121212;
+    /* User requested #121212 */
+    --card-bg: #121212;
+
+    /* User requested Blue for Work, Green for Rest */
+    --primary-neon: #0011ff;
+    /* User requested #0011ff */
+    --rest-neon: #00ff00;
+    /* Vibrant Green */
+
+    --text-color: #ffffff;
+    --text-muted: #666666;
+    --font-main: 'Outfit', sans-serif;
+}
+
+/* Light Theme Variables */
+body.light-theme {
+    --bg-color: #fcfcfc;
+    --card-bg: #ffffff;
+    --text-color: #121212;
+    /* User requested #121212 */
+    --text-muted: #666666;
+
+    /* Adjust neons for white background visibility */
+    --primary-neon: #0011ff;
+    --rest-neon: #00b300;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Standard App Header */
+.app-header {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
+    /* Nav | Title | Toggle */
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.app-header h1 {
+    grid-column: 2;
+    justify-self: center;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.header-nav {
+    grid-column: 1;
+    justify-self: start;
+    display: flex;
+}
+
+.header-actions {
+    grid-column: 3;
+    justify-self: end;
+    display: flex;
+}
+
+.back-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.back-link:hover {
+    background: rgba(128, 128, 128, 0.1);
+    color: var(--text-color);
+}
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(128, 128, 128, 0.1);
+}
+
+/* Quote Spacing */
+/* Quote Spacing & Size */
+/* Quote Spacing & Size */
+/* Quote Spacing & Size */
+.quote-section {
+    width: 100%;
+    margin: 4rem 0;
+    padding: 3rem;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* 3D Block Style */
+    background: var(--card-bg);
+    /* Use card bg variable */
+    position: relative;
+    /* border: 1px solid var(--primary-neon); REMOVED for 3D look */
+    border-radius: 4px;
+    /* Matches tool-card */
+    transform: perspective(1000px) rotateX(0) rotateY(0);
+    transition: 0.5s;
+    /* Add slight shadow to match base state of cards */
+}
+
+/* Light Theme Variables for quote sides (reuse card vars) */
+body.light-theme .quote-section {
+    background: #ffffff;
+}
+
+/* Side (Left) Depth for Quote */
+.quote-section::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -10px;
+    height: 100%;
+    width: 10px;
+    background: var(--card-side-left);
+    transform: skewY(-45deg);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+/* Bottom Depth for Quote */
+.quote-section::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: -5px;
+    height: 10px;
+    width: 100%;
+    background: var(--card-side-bottom);
+    transform: skewX(-45deg);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+/* Hover Effect for Quote */
+.quote-section:hover {
+    transform: translate(10px, -10px);
+    box-shadow: -20px 20px 20px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+body.light-theme .quote-section:hover {
+    box-shadow: -20px 20px 20px rgba(0, 0, 0, 0.2);
+}
+
+.quote-text {
+    font-size: 2.2rem;
+    /* Much bigger */
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+    line-height: 1.4;
+    text-align: center;
+}
+
+.quote-author {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+}
+
+/* Timer Section */
+.timer-section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer-circle {
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+.progress-ring__circle-bg {
+    stroke: #333333;
+    /* Dark mode track */
+    transition: stroke 0.3s ease;
+}
+
+body.light-theme .progress-ring__circle-bg {
+    stroke: #e0e0e0;
+    /* Light mode track */
+}
+
+.progress-ring__circle {
+    transition: stroke 0.3s ease;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    stroke-linecap: round;
+    stroke-dasharray: 879.6;
+    stroke-dashoffset: 0;
+}
+
+.timer-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-label {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--primary-neon);
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.time-display {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease;
+}
+
+.cycle-display {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btn {
+    background: transparent;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+    font-family: var(--font-main);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.btn-primary {
+    background: var(--text-color);
+    color: var(--bg-color);
+    border: 1px solid var(--text-color);
+}
+
+.btn-primary:hover {
+    opacity: 0.8;
+}
+
+.btn-secondary {
+    border-color: var(--text-muted);
+    color: var(--text-muted);
+}
+
+.btn-secondary:hover {
+    border-color: var(--text-color);
+    color: var(--text-color);
+}
+
+.btn-finish {
+    border: 1px solid var(--rest-neon);
+    color: var(--rest-neon);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+}
+
+.btn-finish:hover {
+    background: var(--rest-neon);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+}
+
+/* Settings Panel */
+.settings-panel {
+    padding: 1.5rem;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    transition: border-color 0.3s ease;
+}
+
+body.light-theme .settings-panel {
+    border-color: #e0e0e0;
+}
+
+.setting-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.setting-group label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+.inputs {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.input-wrapper input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 0.8rem 0.5rem;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    text-align: center;
+    font-family: var(--font-main);
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+body.light-theme .input-wrapper input {
+    border-color: #e0e0e0;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary-neon);
+}
+
+.input-wrapper span {
+    position: absolute;
+    right: 8px;
+    bottom: 12px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* State Modifiers */
+/* Work State Default defined in resets */
+
+/* Rest State */
+body.state-rest .status-label {
+    color: var(--rest-neon);
+}
+
+body.state-rest .progress-ring__circle {
+    stroke: var(--rest-neon);
+}
+
+body.state-rest .input-wrapper input:focus {
+    border-color: var(--rest-neon);
+}
+
+/* Calendar Styles */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.calendar-header h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.calendar-nav button {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-color);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.calendar-nav button:hover {
+    border-color: var(--primary-neon);
+    color: var(--primary-neon);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding-bottom: 0.5rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 0.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+body.light-theme .calendar-day {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.calendar-day.empty {
+    background: transparent;
+}
+
+.calendar-day:hover:not(.empty) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.day-number {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.calendar-day.has-workout {
+    border-color: var(--primary-neon);
+    background: rgba(0, 17, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 17, 255, 0.1);
+}
+
+.calendar-day.is-today {
+    border: 1px dashed var(--text-color);
+}
+
+/* Selected Day Highlighting */
+.calendar-day.selected {
+    border-color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.workout-indicator {
+    font-size: 0.75rem;
+    color: var(--primary-neon);
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Tool Cards & Visual Effects */
+.tool-card {
+    background: var(--card-bg);
+    /* No border for cleaner 3D look */
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    /* overflow: visible; IMPORTANT for pseudo-elements */
+    transition: 0.5s;
+
+    transform: perspective(1000px) rotateX(0) rotateY(0);
+    border-radius: 4px;
+    /* Slightly sharper for 3D block look */
+}
+
+/* Light Theme Variables for sides */
+body.light-theme {
+    --card-side-left: #c0c0c0;
+    --card-side-bottom: #a0a0a0;
+}
+
+:root {
+    --card-side-left: #2a2a2a;
+    --card-side-bottom: #1a1a1a;
+}
+
+body.light-theme .tool-card {
+    background: #ffffff;
+    /* border-color: #e0e0e0; */
+}
+
+/* Side (Left) Depth */
+.tool-card::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -10px;
+    height: 100%;
+    width: 10px;
+    background: var(--card-side-left);
+    transform: skewY(-45deg);
+    /* Create side angle */
+    transition: 0.5s;
+    z-index: -1;
+}
+
+/* Bottom Depth */
+.tool-card::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: -5px;
+    height: 10px;
+    width: 100%;
+    background: var(--card-side-bottom);
+    transform: skewX(-45deg);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+/* Hover Effect */
+.tool-card:hover {
+    /* Lift up-right (opposite of depth) */
+    transform: translate(10px, -10px);
+    box-shadow: -20px 20px 20px rgba(0, 0, 0, 0.5);
+    background: var(--card-bg);
+    z-index: 10;
+}
+
+body.light-theme .tool-card:hover {
+    box-shadow: -20px 20px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tool-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+
+
+.tool-card.locked {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.tool-card.locked:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* =========================================
+   Desktop Responsiveness & Layout
+   ========================================= */
+
+@media (min-width: 768px) {
+    .app-container {
+        max-width: 1200px;
+        padding: 4rem;
+    }
+
+    /* HUB PAGE */
+    /* Override the 1fr 1fr split for Hub to keep it stacked or different */
+    /* HUB PAGE */
+    /* Override to ensure it stays stacked (1 column) */
+    /* HUB PAGE */
+    /* Override to ensure it stays stacked (1 column) for the main container layout */
+    html body .app-container.hub-container {
+        grid-template-columns: 100%;
+        /* Explicit single column for main layout */
+        grid-template-rows: auto auto 1fr;
+        gap: 4rem;
+        display: grid;
+    }
+
+    .hub-container .quote-section {
+        grid-column: 1 / -1;
+        /* Ensure it spans full width regardless */
+        grid-row: 2;
+        justify-self: center;
+        width: 100%;
+    }
+
+    .hub-container .tools-grid {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr) !important;
+        /* Force 3 columns for tiles */
+        gap: 6rem;
+        /* Increased gap to prevent overlap of skewed tiles */
+        width: 100%;
+        padding: 2rem;
+        /* Extra padding for stick-out elements */
+    }
+
+    /* TIMER PAGE & Default Desktop Layout */
+    /* Convert timer-section and controls into side-by-side */
+    body:not(.stats-page) .app-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        /* Row 1: Header, Row 2: Content */
+        align-items: start;
+        /* Pin header to top */
+        gap: 4rem;
+    }
+
+    .app-header {
+        grid-column: 1 / -1;
+        margin-bottom: 2rem;
+        align-self: start;
+    }
+
+    .timer-section {
+        justify-content: flex-end;
+        padding-right: 2rem;
+        align-self: center;
+        /* Center vertically in the content row */
+    }
+
+    /* Wrapper for controls/settings on the right */
+    .timer-controls-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: flex-start;
+        padding-left: 2rem;
+        align-self: center;
+        /* Center vertically in the content row */
+    }
+
+    .controls {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .settings-panel {
+        width: 100%;
+        border: 1px solid #333;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    body.light-theme .settings-panel {
+        border-color: #e0e0e0;
+    }
+
+    /* STATS PAGE */
+    /* Specific override for stats container if needed, but app-container grid helps */
+    .stats-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        /* Calendar 2/3, Details 1/3 */
+        grid-template-rows: auto 1fr;
+        align-items: start;
+        gap: 4rem;
+        max-width: 1200px;
+    }
+
+    .stats-header {
+        grid-column: 1 / -1;
+        margin-bottom: 3rem;
+    }
+
+    .summary-cards {
+        grid-column: 1 / 2;
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 2rem;
+    }
+
+    .stat-card {
+        flex: 1;
+    }
+
+    #calendar-mount {
+        grid-column: 1 / 2;
+    }
+
+    #day-details {
+        grid-column: 2 / 3;
+        grid-row: 2 / 4;
+        /* Span down */
+        margin-top: 0 !important;
+        /* Remove mobile margin */
+        margin-left: 2rem;
+        background: var(--card-bg);
+        border: 1px solid #333;
+        border-radius: 16px;
+        padding: 2rem;
+        height: 100%;
+        min-height: 500px;
+    }
+
+    body.light-theme #day-details {
+        border-color: #e0e0e0;
+    }
+
+    /* Make the list scrollable if long */
+    #day-sessions-list {
+        max-height: 600px;
+        overflow-y: auto;
+        padding-right: 0.5rem;
+    }
+
+    /* Scrollbar Styling */
+    #day-sessions-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #day-sessions-list::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 3px;
+    }
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Pulse | Workout Timer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-nav">
+                <a href="index.html" class="back-link" aria-label="Back to Hub">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
+            <h1>NEON PULSE</h1>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Day/Night Mode">
+                    <svg class="sun-icon" viewBox="0 0 24 24" width="24" height="24">
+                        <circle cx="12" cy="12" r="5" fill="currentColor" />
+                        <path
+                            d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" width="24" height="24" style="display:none">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Timer Display Area -->
+        <main class="timer-section">
+            <div class="timer-circle">
+                <svg class="progress-ring" width="300" height="300">
+                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.1)" stroke-width="12"
+                        fill="transparent" r="140" cx="150" cy="150" />
+                    <circle class="progress-ring__circle" stroke="#00ffe7" stroke-width="12" fill="transparent" r="140"
+                        cx="150" cy="150" />
+                </svg>
+                <div class="timer-content">
+                    <div id="status-label" class="status-label">READY</div>
+                    <div id="time-display" class="time-display">00:00</div>
+                    <div id="cycle-label" class="cycle-display">Cycle 1</div>
+                </div>
+            </div>
+        </main>
+
+        <div class="timer-controls-wrapper">
+            <!-- Controls -->
+            <div class="controls">
+                <button id="start-btn" class="btn btn-primary">
+                    START
+                </button>
+                <button id="reset-btn" class="btn btn-secondary">
+                    RESET
+                </button>
+                <button id="finish-btn" class="btn btn-finish" style="display:none">
+                    FINISH
+                </button>
+            </div>
+
+            <!-- Settings Panel -->
+            <div class="settings-panel">
+                <div class="setting-group">
+                    <label>WORK DURATION</label>
+                    <div class="inputs">
+                        <div class="input-wrapper">
+                            <input type="number" id="work-min" value="0" min="0" max="59">
+                            <span>m</span>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="number" id="work-sec" value="20" min="0" max="59">
+                            <span>s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>REST DURATION</label>
+                    <div class="inputs">
+                        <div class="input-wrapper">
+                            <input type="number" id="rest-min" value="0" min="0" max="59">
+                            <span>m</span>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="number" id="rest-sec" value="10" min="0" max="59">
+                            <span>s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="storage.js"></script>
+    <script src="theme.js"></script>
+    <script src="timer.js"></script>
+</body>
+
+</html>
