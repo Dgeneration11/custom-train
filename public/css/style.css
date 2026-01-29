@@ -37,22 +37,35 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-main);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    /* Safer for scrolling pages */
     min-height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app-container {
     width: 100%;
     max-width: 480px;
+    margin: 0 auto;
+    /* Center horizontally */
     padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+    min-height: 100vh;
+    display: block;
+    /* Standard block flow */
+    position: relative;
+}
+
+/* Add spacing manually since gap is gone */
+.app-header,
+.tools-grid,
+.quote-section {
+    margin-bottom: 2rem;
+}
+
+.app-container.wide {
+    max-width: 1200px;
+    /* Wider layout for galleries */
 }
 
 /* Standard App Header */
@@ -97,9 +110,25 @@ body {
     align-items: center;
     justify-content: center;
     width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    transition: all 0.2s ease;
+}
+
+.app-footer {
+    width: 100%;
+    min-width: 100%;
+    display: block;
+    text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+    clear: both;
+
+    /* ADD THESE */
+    grid-column: 1 / -1;
+    justify-self: center;
 }
 
 .back-link:hover {
@@ -451,6 +480,111 @@ body.light-theme .progress-ring__circle-bg {
     box-shadow: none;
     /* Override old glow */
     transform: translate(2px, -2px);
+}
+
+/* CROSSHAIRS FEATURE STYLES */
+.crosshairs-grid {
+    display: grid;
+    width: 100%;
+
+    justify-content: center;
+    align-content: start;
+}
+
+.crosshair-card {
+    align-items: center;
+    /* Center content */
+    text-align: center;
+}
+
+.crosshair-preview {
+    width: 100%;
+    height: 150px;
+    background: #333333;
+    /* Dark Mode: Grey */
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Light Mode Override */
+body.light-theme .crosshair-preview {
+    background: #ffffff;
+    /* Light Mode: White */
+    border: 1px solid #e0e0e0;
+    /* Border for visibility on white card */
+    box-shadow: none;
+}
+
+
+
+.crosshair-render {
+    position: relative;
+}
+
+/* Render Types */
+
+/* DOT */
+.type-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+/* CROSS */
+.type-cross {
+    width: 2px;
+    height: 20px;
+    background: currentColor;
+    /* Vertical line */
+}
+
+.type-cross::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 2px;
+    background: currentColor;
+    /* Horizontal line */
+}
+
+/* CIRCLE */
+.type-circle {
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.code-snippet {
+    font-family: monospace;
+    font-size: 0.8rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    border-radius: 4px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-muted);
+    user-select: all;
+    margin-bottom: 0.5rem;
+}
+
+/* Small Button Fix */
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    margin: 0;
 }
 
 /* Settings Panel - 3D Block */
@@ -936,3 +1070,42 @@ body.light-theme .tool-card:hover {
         border-radius: 3px;
     }
 }
+
+/* Color Modifiers */
+.color-green {
+    background: #00ff00;
+    color: #00ff00;
+}
+
+.color-cyan {
+    background: #00ffff;
+    color: #00ffff;
+}
+
+.color-white {
+    background: #ffffff;
+    color: #ffffff;
+}
+
+.color-red {
+    background: #ff0000;
+    color: #ff0000;
+}
+
+.color-yellow {
+    background: #ffff00;
+    color: #ffff00;
+}
+
+.color-blue {
+    background: #0088ff;
+    color: #0088ff;
+}
+
+.color-black {
+    background: #000000;
+    color: #000000;
+    box-shadow: 0 0 0 1px #ffffff;
+}
+
+/* White outline for visibility */
